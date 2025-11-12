@@ -1,5 +1,7 @@
 package com.expense.api.domain;
 
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
 import org.springframework.data.annotation.Id;
 
 import java.time.LocalDate;
@@ -7,9 +9,13 @@ import java.time.LocalDate;
 public class Expense {
    @Id
     private Long id;
+    @NotEmpty
     private String description;
+    @NotNull
     private LocalDate date;
+    @NotNull
     private double amount;
+    @NotNull
     private Category category;
 
     public Long getId() {

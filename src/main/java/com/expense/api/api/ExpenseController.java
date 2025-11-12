@@ -2,6 +2,7 @@ package com.expense.api.api;
 
 import com.expense.api.domain.Expense;
 import com.expense.api.repository.ExpenseRepository;
+import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.web.bind.annotation.*;
@@ -36,9 +37,20 @@ public class ExpenseController {
     }
 
     @PostMapping ("/expenses")
-    public Expense save(@RequestBody Expense expense){
+    public Expense save(@Valid  @RequestBody Expense expense){
         return expenseRepository.save(expense);
 
+    }
+    @PutMapping("/expenses/{id}")
+    public Expense update(@Valid @RequestBody Expense expense,@PathVariable("id") Long id){
+      findById(id);
+      expense.setId(id);
+      return expenseRepository.save(expense);
+    }
+    @DeleteMapping("/expenses/{id}")
+    public void delete(@PathVariable("id") Long id){
+        Expense existingExpense =findById(id);
+        expenseRepository.deleteById(id);
     }
 
 }
